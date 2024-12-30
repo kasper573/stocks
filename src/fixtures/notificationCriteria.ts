@@ -7,17 +7,17 @@ export const priceChangeTest = defineOptions<
   boolean // should be true if the price span meets the target percentage
 >()({
   up: {
-    label: "up by",
+    label: "up",
     create: (priceSpan, targetPercentage) =>
       priceChange(priceSpan) >= Math.abs(targetPercentage),
   },
   down: {
-    label: "down by",
+    label: "down",
     create: (priceSpan, targetPercentage) =>
       priceChange(priceSpan) <= -Math.abs(targetPercentage),
   },
   both: {
-    label: "up or down by",
+    label: "up or down",
     create: (priceSpan, target) =>
       priceChange(priceSpan) >= Math.abs(target) ||
       priceChange(priceSpan) <= -Math.abs(target),

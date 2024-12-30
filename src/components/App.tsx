@@ -9,14 +9,15 @@ import { PWABadge } from "./PWABadge";
 import { acquireNotificationPermissions } from "../functions/sendNotification";
 
 export default function App() {
-  const [filter, setFilter] = useLocalStorage<SearchFilter>("searchFilter", {
+  const [filter, setFilter] = useLocalStorage<SearchFilter>("search-filter", {
     apiKey: import.meta.env.VITE_POLY_API_KEY ?? "",
     ticker: "NVDA",
     notify: {
       percentage: 5,
       type: "both",
     },
-    marketSpan: "yesterday",
+    marketDays: 5,
+    targetDate: "yesterday",
     price: "close",
   });
 

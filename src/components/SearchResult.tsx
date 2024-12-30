@@ -5,13 +5,14 @@ import { useNow } from "../hooks/useNow";
 import { priceChange } from "../functions/priceChange";
 import { fetchPriceSpan } from "../functions/fetchPriceSpan";
 import { SearchFilter } from "./SearchForm";
-import { marketSpan } from "../fixtures/marketSpan";
 import { useDebounceValue, useInterval } from "usehooks-ts";
 import { shouldNotifyPrice } from "../fixtures/notificationCriteria";
 import {
   isAppInBackground,
   sendNotification,
 } from "../functions/sendNotification";
+import { createMarketSpan } from "../functions/createMarketSpan";
+import { targetDate } from "../fixtures/targetDate";
 
 export function SearchResult({
   filter: inputFilter,
@@ -28,8 +29,13 @@ export function SearchResult({
   });
 
   const dates = useMemo(
-    () => marketSpan.create(filter.marketSpan, now, holidays),
-    [now, holidays, filter.marketSpan],
+    () =>
+      createMarketSpan(
+        filter.marketDays,
+        targetDate.create(filter.targetDate, now),
+        holidays,
+      ),
+    [now, filter.marketDays, filter.targetDate, holidays],
   );
 
   const { data: price } = useSuspenseQuery({

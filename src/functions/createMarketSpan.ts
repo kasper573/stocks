@@ -3,8 +3,8 @@ import { formatDate } from "date-fns";
 import { ISODate, ISODateSpan } from "./types";
 
 export function createMarketSpan(
-  now: Date,
   numberOfMarketDays: number,
+  to: Date,
   holidays: IMarketHoliday[],
 ): ISODateSpan {
   const isMarketDay = (date: Date) => {
@@ -24,7 +24,6 @@ export function createMarketSpan(
     return previousDate;
   };
 
-  let to = new Date(now);
   while (!isMarketDay(to)) {
     to = findPreviousMarketDay(to);
   }

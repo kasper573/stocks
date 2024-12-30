@@ -3,15 +3,16 @@ import {
   defaultNotificationCriteria,
   priceChangeTest,
 } from "../fixtures/notificationCriteria";
-import { marketSpan, MarketSpanType } from "../fixtures/marketSpan";
 import { priceType, PriceType } from "../fixtures/priceType";
 import styles from "./SearchForm.module.css";
-
+import { targetDate, TargetDate } from "../fixtures/targetDate";
+import { OptionSelect } from "./OptionSelect";
 export interface SearchFilter {
   apiKey: string;
   ticker: string;
   notify?: NotificationCriteria;
-  marketSpan: MarketSpanType;
+  marketDays: number;
+  targetDate: TargetDate;
   price: PriceType;
 }
 
@@ -50,34 +51,30 @@ export function SearchForm({
 
       <label>
         market span
-        <select
-          value={filter.marketSpan}
+        <input
+          type="number"
+          value={filter.marketDays}
+          min={0}
+          max={999}
           onChange={(e) =>
-            setFilter("marketSpan", marketSpan.parseId(e.currentTarget.value))
+            setFilter("marketDays", asNumber(e.currentTarget.value))
           }
-        >
-          {marketSpan.list.map(({ id, label }) => (
-            <option key={id} value={id}>
-              {label}
-            </option>
-          ))}
-        </select>
+        />
+        business days to
+        <OptionSelect
+          options={targetDate}
+          value={filter.targetDate}
+          onChange={(selected) => setFilter("targetDate", selected)}
+        />
       </label>
 
       <label>
         price type
-        <select
+        <OptionSelect
+          options={priceType}
           value={filter.price}
-          onChange={(e) =>
-            setFilter("price", priceType.parseId(e.currentTarget.value))
-          }
-        >
-          {priceType.list.map(({ label, id }) => (
-            <option key={id} value={id}>
-              {label}
-            </option>
-          ))}
-        </select>
+          onChange={(selected) => setFilter("price", selected)}
+        />
       </label>
 
       <label>
@@ -95,22 +92,18 @@ export function SearchForm({
         {filter.notify && (
           <>
             <span> when</span>
-            <select
+            <OptionSelect
+              options={priceChangeTest}
               value={filter.notify.type}
-              onChange={(e) =>
+              onChange={(type) =>
                 setFilter("notify", {
                   ...defaultNotificationCriteria,
                   ...filter.notify,
-                  type: priceChangeTest.parseId(e.currentTarget.value),
+                  type: type,
                 })
               }
-            >
-              {priceChangeTest.list.map(({ id, label }) => (
-                <option key={id} value={id}>
-                  {label}
-                </option>
-              ))}
-            </select>
+            />
+            by
             <input
               type="number"
               value={filter.notify.percentage}
@@ -120,7 +113,7 @@ export function SearchForm({
                 setFilter("notify", {
                   ...defaultNotificationCriteria,
                   ...filter.notify,
-                  percentage: e.currentTarget.valueAsNumber,
+                  percentage: asNumber(e.currentTarget.value),
                 })
               }
             />
@@ -130,4 +123,8 @@ export function SearchForm({
       </label>
     </div>
   );
+}
+
+function asNumber(value: string): number {
+  return Number(value) || 0;
 }
