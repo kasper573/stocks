@@ -5,6 +5,7 @@ import { SuspenseFallback } from "./SuspenseFallback";
 import { ErrorBoundary } from "react-error-boundary";
 import { ErrorFallback } from "./ErrorFallback";
 import { useLocalStorage } from "usehooks-ts";
+import { PWABadge } from "./PWABadge";
 
 export default function App() {
   const [filter, setFilter] = useLocalStorage<SearchFilter>("searchFilter", {
@@ -25,6 +26,8 @@ export default function App() {
           <SearchResult filter={filter} />
         </ErrorBoundary>
       </Suspense>
+
+      <PWABadge />
     </>
   );
 }
