@@ -57,7 +57,7 @@ export function SearchForm({
           min={0}
           max={999}
           onChange={(e) =>
-            setFilter("marketDays", asNumber(e.currentTarget.value))
+            setFilter("marketDays", e.currentTarget.valueAsNumber)
           }
         />
         business days to
@@ -113,7 +113,7 @@ export function SearchForm({
                 setFilter("notify", {
                   ...defaultNotificationCriteria,
                   ...filter.notify,
-                  percentage: asNumber(e.currentTarget.value),
+                  percentage: e.currentTarget.valueAsNumber,
                 })
               }
             />
@@ -123,8 +123,4 @@ export function SearchForm({
       </label>
     </div>
   );
-}
-
-function asNumber(value: string): number {
-  return Number(value) || 0;
 }
