@@ -10,6 +10,7 @@ export interface SearchFilter {
   alertDirection: "up" | "down" | "both";
   marketSpan: MarketSpanType;
   price: PriceType;
+  enabled: boolean;
 }
 
 export function SearchForm({
@@ -101,6 +102,15 @@ export function SearchForm({
           }
         />
         percent
+      </label>
+
+      <label>
+        alert enabled
+        <input
+          type="checkbox"
+          checked={filter.enabled}
+          onChange={(e) => setFilter("enabled", e.currentTarget.checked)}
+        />
       </label>
     </div>
   );

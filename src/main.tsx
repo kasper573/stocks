@@ -10,6 +10,7 @@ import { SuspenseFallback } from "./components/SuspenseFallback.tsx";
 import { createSyncStoragePersister } from "@tanstack/query-sync-storage-persister";
 import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client";
 import { acquireNotificationPermissions } from "./functions/sendNotification.ts";
+import { logger } from "./logger.ts";
 
 // eslint-disable-next-line react-refresh/only-export-components
 const App = lazy(() => import("./components/App.tsx"));
@@ -26,6 +27,8 @@ const queryClient = new QueryClient({
 });
 
 const persister = createSyncStoragePersister({ storage: localStorage });
+
+logger.subscribe((entry) => console.log(...entry));
 
 void acquireNotificationPermissions();
 
