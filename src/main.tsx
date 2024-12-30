@@ -1,3 +1,4 @@
+// @ts-expect-error lato has no typedefs
 import "@fontsource/lato";
 import "./main.css";
 import { lazy, StrictMode, Suspense } from "react";
