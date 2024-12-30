@@ -1,20 +1,17 @@
-const gte = (actual: number, target: number): boolean => actual >= target;
-const lte = (actual: number, target: number): boolean => actual <= target;
-
 export const alertDirections = {
   up: {
     label: "up by",
-    isMatch: gte,
+    isMatch: (actual, target) => actual >= Math.abs(target),
   },
   down: {
     label: "down by",
-    isMatch: lte,
+    isMatch: (actual, target) => actual <= -Math.abs(target),
   },
   both: {
     label: "up or down by",
-    isMatch: (actual, target): boolean => {
-      return lte(Math.abs(actual), target) || gte(Math.abs(actual), target);
-    },
+    isMatch: (actual, target): boolean =>
+      alertDirections.up.isMatch(actual, target) ||
+      alertDirections.down.isMatch(actual, target),
   },
 } satisfies Record<
   string,
