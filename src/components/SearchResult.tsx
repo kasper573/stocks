@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { restClient } from "@polygon.io/client-js";
 import { useNow } from "../hooks/useNow";
