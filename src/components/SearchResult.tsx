@@ -42,15 +42,11 @@ export function SearchResult({
   const isAlertPrice =
     price && alertDir.isMatch(priceChange(price), filter.alertPercentage);
 
-  useEffect(() => {
+  function tryAlert() {
+    logger.log("checking if notification should be sent");
     if (filter.alertEnabled && isAlertPrice && isAppInBackground()) {
       sendNotification("Price alert", `Price alert for ${filter.ticker}`);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isAlertPrice, filter.alertEnabled]);
-
-  function tryAlert() {
-    logger.log("testing background activity");
   }
 
   useInterval(tryAlert, 5000);
