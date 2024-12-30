@@ -1,12 +1,13 @@
-import { Suspense, useState } from "react";
+import { Suspense } from "react";
 import { SearchFilter, SearchForm } from "./SearchForm";
 import { SearchResult } from "./SearchResult";
 import { SuspenseFallback } from "./SuspenseFallback";
 import { ErrorBoundary } from "react-error-boundary";
 import { ErrorFallback } from "./ErrorFallback";
+import { useLocalStorage } from "usehooks-ts";
 
 export default function App() {
-  const [filter, setFilter] = useState<SearchFilter>({
+  const [filter, setFilter] = useLocalStorage<SearchFilter>("searchFilter", {
     apiKey: import.meta.env.VITE_POLY_API_KEY ?? "",
     ticker: "NVDA",
     alertPercentage: 5,
