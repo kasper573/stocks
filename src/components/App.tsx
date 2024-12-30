@@ -7,7 +7,7 @@ import { ErrorFallback } from "./ErrorFallback";
 
 export default function App() {
   const [filter, setFilter] = useState<SearchFilter>({
-    apiKey: import.meta.env.VITE_POLY_API_KEY as string,
+    apiKey: import.meta.env.VITE_POLY_API_KEY ?? "",
     ticker: "NVDA",
     alertPercentage: 5,
     alertDirection: "up",
