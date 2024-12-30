@@ -1,0 +1,17 @@
+.form {
+  margin-bottom: 8px;
+
+  label {
+    display: block;
+    input,
+    select {
+      margin: 0 8px;
+    }
+  }
+  label + label {
+    margin-top: 4px;
+  }
+  button {
+    margin-top: 8px;
+  }
+}
