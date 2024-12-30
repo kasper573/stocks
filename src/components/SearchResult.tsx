@@ -74,5 +74,9 @@ export function SearchResult({
 }
 
 function formatPercentage(p: number) {
-  return `${Math.sign(p) ? "+" : "-"}${Math.abs(p).toFixed(2)}%`;
+  return `${sign(p)}${Math.abs(p).toFixed(2)}%`;
+}
+
+function sign(p: number) {
+  return p > 0 ? "+" : p < 0 ? "-" : "";
 }
