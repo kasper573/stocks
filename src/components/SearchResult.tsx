@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo } from "react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { restClient } from "@polygon.io/client-js";
 import { useNow } from "../hooks/useNow";
@@ -8,7 +8,6 @@ import { SearchFilter } from "./SearchForm";
 import { marketSpans } from "../fixtures/marketSpans";
 import { useDebounceValue } from "usehooks-ts";
 import { alertDirections } from "../fixtures/alertDirections";
-import { Alert } from "./Alert";
 import { sendNotification } from "../functions/sendNotification";
 
 export function SearchResult({
