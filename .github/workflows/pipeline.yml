@@ -26,6 +26,8 @@ jobs:
       - run: pnpm format:check
 
       - name: Build
+        env:
+          BASE_URL: "/${{ github.event.repository.name }}/"
         run: pnpm build
 
       - name: Setup Pages
