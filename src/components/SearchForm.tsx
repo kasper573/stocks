@@ -78,19 +78,7 @@ export function SearchForm({
       </label>
 
       <label>
-        alert percentage
-        <input
-          type="number"
-          value={filter.alertPercentage}
-          min={0}
-          onChange={(e) =>
-            setFilter("alertPercentage", e.currentTarget.valueAsNumber)
-          }
-        />
-      </label>
-
-      <label>
-        alert direction
+        alert when
         <select
           value={filter.alertDirection}
           onChange={(e) =>
@@ -103,6 +91,16 @@ export function SearchForm({
             </option>
           ))}
         </select>
+        <input
+          type="number"
+          value={filter.alertPercentage}
+          min={0}
+          style={{ width: "4em" }}
+          onChange={(e) =>
+            setFilter("alertPercentage", e.currentTarget.valueAsNumber)
+          }
+        />
+        percent
       </label>
     </div>
   );
