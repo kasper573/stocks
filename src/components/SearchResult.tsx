@@ -35,15 +35,16 @@ export function SearchResult({
     queryFn: () => fetchPriceSpan(api, filter.ticker, dates, filter.price),
   });
 
-  const [isAlertVisible, setIsAlertVisible] = useState(false);
+  const alertDir = alertDirections[filter.alertDirection];
+  const isAlertActive =
+    price && alertDir.isMatch(priceChange(price), filter.alertPercentage);
 
   useEffect(() => {
-    const alertDir = alertDirections[filter.alertDirection];
-    if (price && alertDir.isMatch(priceChange(price), filter.alertPercentage)) {
+    if (isAlertActive) {
       sendNotification("Price alert", `Price alert for ${filter.ticker}`);
-      setIsAlertVisible(true);
     }
-  }, [price, filter]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAlertActive]);
 
   return (
     <>
@@ -51,9 +52,11 @@ export function SearchResult({
       <div>To date: {dates.to}</div>
       <div>From price: {price.from}</div>
       <div>To price: {price.to}</div>
-      <div>Change: {priceChange(price).toFixed(2)}%</div>
+      <div>Price change: {priceChange(price).toFixed(2)}%</div>
 
-      {isAlertVisible && <Alert onDismiss={() => setIsAlertVisible(false)} />}
+      {isAlertActive && (
+        <h1 style={{ color: "red" }}>Alert! Price change matches target!</h1>
+      )}
     </>
   );
 }
