@@ -1,49 +1,46 @@
 import { PriceSpan } from "../functions/fetchPriceSpan";
 import { priceChange } from "../functions/priceChange";
+import { defineOptions } from "./options";
 
-export const notificationCriterias = {
+export const priceChangeTest = defineOptions<
+  [price: PriceSpan, targetPercentage: number],
+  boolean // should be true if the price span meets the target percentage
+>()({
   up: {
     label: "up by",
-    isActive: (actual, target) => actual >= Math.abs(target),
+    create: (priceSpan, targetPercentage) =>
+      priceChange(priceSpan) >= Math.abs(targetPercentage),
   },
   down: {
     label: "down by",
-    isActive: (actual, target) => actual <= -Math.abs(target),
+    create: (priceSpan, targetPercentage) =>
+      priceChange(priceSpan) <= -Math.abs(targetPercentage),
   },
   both: {
     label: "up or down by",
-    isActive: (actual, target): boolean =>
-      notificationCriterias.up.isActive(actual, target) ||
-      notificationCriterias.down.isActive(actual, target),
+    create: (priceSpan, target) =>
+      priceChange(priceSpan) >= Math.abs(target) ||
+      priceChange(priceSpan) <= -Math.abs(target),
   },
-} satisfies Record<string, NotificationCriteriaOption>;
+});
 
-export type NotificationCriteriaType = keyof typeof notificationCriterias;
-
-export interface NotificationCriteriaOption {
-  label: string;
-  isActive: (currentPercentage: number, targetPercentage: number) => boolean;
-}
+export type PriceChangeTestType = (typeof priceChangeTest.ids)[number];
 
 export interface NotificationCriteria {
   percentage: number;
-  type: NotificationCriteriaType;
+  type: PriceChangeTestType;
 }
 
 export const defaultNotificationCriteria: NotificationCriteria = {
   percentage: 5,
-  type: "up",
+  type: "both",
 };
 
 export function shouldNotifyPrice(
   price: PriceSpan,
   criteria?: NotificationCriteria,
 ): boolean {
-  if (criteria) {
-    const { percentage, type } = criteria;
-    const notification = notificationCriterias[type];
-    return notification.isActive(priceChange(price), percentage);
-  }
-
-  return false;
+  return criteria
+    ? priceChangeTest.create(criteria.type, price, criteria.percentage)
+    : false;
 }

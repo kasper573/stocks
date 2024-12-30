@@ -5,7 +5,7 @@ import { useNow } from "../hooks/useNow";
 import { priceChange } from "../functions/priceChange";
 import { fetchPriceSpan } from "../functions/fetchPriceSpan";
 import { SearchFilter } from "./SearchForm";
-import { marketSpans } from "../fixtures/marketSpan";
+import { marketSpan } from "../fixtures/marketSpan";
 import { useDebounceValue, useInterval } from "usehooks-ts";
 import { shouldNotifyPrice } from "../fixtures/notificationCriteria";
 import {
@@ -28,7 +28,7 @@ export function SearchResult({
   });
 
   const dates = useMemo(
-    () => marketSpans[filter.marketSpan].dateSpan(now, holidays),
+    () => marketSpan.create(filter.marketSpan, now, holidays),
     [now, holidays, filter.marketSpan],
   );
 

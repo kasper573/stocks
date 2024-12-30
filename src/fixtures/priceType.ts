@@ -1,30 +1,10 @@
-import { IDailyOpenClose } from "@polygon.io/client-js";
+import { defineOptions } from "./options";
 
-export const priceTypes: PriceTypeOption[] = [
-  {
-    value: "open",
-    label: "open price",
-  },
-  {
-    value: "high",
-    label: "high price",
-  },
-  {
-    value: "low",
-    label: "low price",
-  },
-  {
-    value: "close",
-    label: "close price",
-  },
-];
+export const priceType = defineOptions()({
+  open: "open price",
+  high: "high price",
+  low: "low price",
+  close: "close price",
+});
 
-export type PriceType = Exclude<
-  keyof IDailyOpenClose,
-  "from" | "status" | "symbol" | "volume"
->;
-
-export interface PriceTypeOption {
-  label: string;
-  value: PriceType;
-}
+export type PriceType = (typeof priceType.ids)[number];

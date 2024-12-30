@@ -1,11 +1,10 @@
 import {
-  NotificationCriteriaType,
   NotificationCriteria,
   defaultNotificationCriteria,
-  notificationCriterias,
+  priceChangeTest,
 } from "../fixtures/notificationCriteria";
-import { marketSpans, MarketSpanType } from "../fixtures/marketSpan";
-import { PriceType, priceTypes } from "../fixtures/priceType";
+import { marketSpan, MarketSpanType } from "../fixtures/marketSpan";
+import { priceType, PriceType } from "../fixtures/priceType";
 import styles from "./SearchForm.module.css";
 
 export interface SearchFilter {
@@ -54,11 +53,11 @@ export function SearchForm({
         <select
           value={filter.marketSpan}
           onChange={(e) =>
-            setFilter("marketSpan", e.currentTarget.value as MarketSpanType)
+            setFilter("marketSpan", marketSpan.parseId(e.currentTarget.value))
           }
         >
-          {Object.entries(marketSpans).map(([value, { label }]) => (
-            <option key={value} value={value}>
+          {marketSpan.list.map(({ id, label }) => (
+            <option key={id} value={id}>
               {label}
             </option>
           ))}
@@ -70,11 +69,11 @@ export function SearchForm({
         <select
           value={filter.price}
           onChange={(e) =>
-            setFilter("price", e.currentTarget.value as PriceType)
+            setFilter("price", priceType.parseId(e.currentTarget.value))
           }
         >
-          {priceTypes.map(({ label, value }) => (
-            <option key={value} value={value}>
+          {priceType.list.map(({ label, id }) => (
+            <option key={id} value={id}>
               {label}
             </option>
           ))}
@@ -102,17 +101,15 @@ export function SearchForm({
                 setFilter("notify", {
                   ...defaultNotificationCriteria,
                   ...filter.notify,
-                  type: e.currentTarget.value as NotificationCriteriaType,
+                  type: priceChangeTest.parseId(e.currentTarget.value),
                 })
               }
             >
-              {Object.entries(notificationCriterias).map(
-                ([value, { label }]) => (
-                  <option key={value} value={value}>
-                    {label}
-                  </option>
-                ),
-              )}
+              {priceChangeTest.list.map(({ id, label }) => (
+                <option key={id} value={id}>
+                  {label}
+                </option>
+              ))}
             </select>
             <input
               type="number"
