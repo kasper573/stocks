@@ -1,5 +1,6 @@
 import { Suspense, useEffect } from "react";
-import { SearchFilter, SearchForm } from "./SearchForm";
+import { SearchForm } from "./SearchForm";
+import { defaultSearchFilter } from "../fixtures/defaultSearchFilter";
 import { SearchResult } from "./SearchResult";
 import { SuspenseFallback } from "./SuspenseFallback";
 import { ErrorBoundary } from "react-error-boundary";
@@ -9,17 +10,10 @@ import { PWABadge } from "./PWABadge";
 import { acquireNotificationPermissions } from "../functions/sendNotification";
 
 export default function App() {
-  const [filter, setFilter] = useLocalStorage<SearchFilter>("search-filter", {
-    apiKey: import.meta.env.VITE_POLY_API_KEY ?? "",
-    ticker: "NVDA",
-    notify: {
-      percentage: 5,
-      type: "both",
-    },
-    marketDays: 5,
-    targetDate: "yesterday",
-    price: "close",
-  });
+  const [filter, setFilter] = useLocalStorage(
+    "search-filter",
+    defaultSearchFilter,
+  );
 
   useEffect(() => {
     if (filter.notify) {

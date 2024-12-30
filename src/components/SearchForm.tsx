@@ -7,6 +7,9 @@ import { priceType, PriceType } from "../fixtures/priceType";
 import styles from "./SearchForm.module.css";
 import { targetDate, TargetDate } from "../fixtures/targetDate";
 import { OptionSelect } from "./OptionSelect";
+import { defaultSearchFilter } from "../fixtures/defaultSearchFilter";
+import { Dispatch, SetStateAction } from "react";
+
 export interface SearchFilter {
   apiKey: string;
   ticker: string;
@@ -21,14 +24,27 @@ export function SearchForm({
   onChange,
 }: {
   value: SearchFilter;
-  onChange: (filter: SearchFilter) => void;
+  onChange: Dispatch<SetStateAction<SearchFilter>>;
 }) {
   function setFilter<Key extends keyof SearchFilter>(
     key: Key,
     value: SearchFilter[Key],
   ) {
-    return onChange({ ...filter, [key]: value });
+    return onChange((current) => ({ ...current, [key]: value }));
   }
+
+  function resetInvalidValues() {
+    if (isInvalidNumber(filter.marketDays)) {
+      setFilter("marketDays", defaultSearchFilter.marketDays);
+    }
+    if (filter.notify && isInvalidNumber(filter.notify.percentage)) {
+      setFilter("notify", {
+        ...filter.notify,
+        percentage: defaultNotificationCriteria.percentage,
+      });
+    }
+  }
+
   return (
     <div className={styles.form}>
       <label>
@@ -50,12 +66,13 @@ export function SearchForm({
       </label>
 
       <label>
-        market span
+        check
         <input
           type="number"
           value={filter.marketDays}
           min={0}
           max={999}
+          onBlur={resetInvalidValues}
           onChange={(e) =>
             setFilter("marketDays", e.currentTarget.valueAsNumber)
           }
@@ -108,7 +125,8 @@ export function SearchForm({
               type="number"
               value={filter.notify.percentage}
               min={0}
-              style={{ width: "4em" }}
+              style={{ width: "3em" }}
+              onBlur={resetInvalidValues}
               onChange={(e) =>
                 setFilter("notify", {
                   ...defaultNotificationCriteria,
@@ -117,10 +135,14 @@ export function SearchForm({
                 })
               }
             />
-            percent
+            %
           </>
         )}
       </label>
     </div>
   );
+}
+
+function isInvalidNumber(value?: number | null) {
+  return value === null || value === undefined || isNaN(value);
 }
