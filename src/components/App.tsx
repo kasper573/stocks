@@ -6,7 +6,6 @@ import { ErrorBoundary } from "react-error-boundary";
 import { ErrorFallback } from "./ErrorFallback";
 import { useLocalStorage } from "usehooks-ts";
 import { PWABadge } from "./PWABadge";
-import { LogViewer } from "./LogViewer";
 import { acquireNotificationPermissions } from "../functions/sendNotification";
 
 export default function App() {
@@ -35,8 +34,6 @@ export default function App() {
           <SearchResult filter={filter} />
         </ErrorBoundary>
       </Suspense>
-
-      <LogViewer />
 
       <PWABadge />
     </>

@@ -12,7 +12,6 @@ import {
   isAppInBackground,
   sendNotification,
 } from "../functions/sendNotification";
-import { logger } from "../logger";
 
 export function SearchResult({
   filter: inputFilter,
@@ -43,7 +42,6 @@ export function SearchResult({
     price && alertDir.isMatch(priceChange(price), filter.alertPercentage);
 
   function tryAlert() {
-    logger.log("checking if notification should be sent");
     if (filter.alertEnabled && isAlertPrice && isAppInBackground()) {
       sendNotification("Price alert", `Price alert for ${filter.ticker}`);
     }
