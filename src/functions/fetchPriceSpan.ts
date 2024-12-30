@@ -1,5 +1,5 @@
 import { IRestClient } from "@polygon.io/client-js";
-import { PriceType } from "../fixtures/priceTypes";
+import { PriceType } from "../fixtures/priceType";
 import { ISODateSpan } from "./types";
 
 export async function fetchPriceSpan(

@@ -5,9 +5,9 @@ import { useNow } from "../hooks/useNow";
 import { priceChange } from "../functions/priceChange";
 import { fetchPriceSpan } from "../functions/fetchPriceSpan";
 import { SearchFilter } from "./SearchForm";
-import { marketSpans } from "../fixtures/marketSpans";
+import { marketSpans } from "../fixtures/marketSpan";
 import { useDebounceValue, useInterval } from "usehooks-ts";
-import { alertDirections } from "../fixtures/alertDirections";
+import { shouldNotifyPrice } from "../fixtures/notificationCriteria";
 import {
   isAppInBackground,
   sendNotification,
@@ -33,21 +33,22 @@ export function SearchResult({
   );
 
   const { data: price } = useSuspenseQuery({
-    queryKey: [filter, dates],
+    queryKey: [filter.apiKey, filter.ticker, dates, filter.price],
     queryFn: () => fetchPriceSpan(api, filter.ticker, dates, filter.price),
   });
 
-  const alertDir = alertDirections[filter.alertDirection];
-  const isAlertPrice =
-    price && alertDir.isMatch(priceChange(price), filter.alertPercentage);
+  const shouldNotify = shouldNotifyPrice(price, filter.notify);
 
-  function tryAlert() {
-    if (filter.alertEnabled && isAlertPrice && isAppInBackground()) {
-      sendNotification("Price alert", `Price alert for ${filter.ticker}`);
+  function tryNotify() {
+    if (shouldNotify && isAppInBackground()) {
+      sendNotification(
+        "Price alert",
+        `${filter.ticker} is at ${price.to} (${priceChange(price).toFixed(2)}%)`,
+      );
     }
   }
 
-  useInterval(tryAlert, 5000);
+  useInterval(tryNotify, 5000);
 
   return (
     <>
@@ -57,8 +58,8 @@ export function SearchResult({
       <div>To price: {price.to}</div>
       <div>Price change: {priceChange(price).toFixed(2)}%</div>
 
-      {isAlertPrice && (
-        <h1 style={{ color: "red" }}>Alert! Price change matches target!</h1>
+      {shouldNotify && (
+        <h1 style={{ color: "red" }}>Price change matches target!</h1>
       )}
     </>
   );

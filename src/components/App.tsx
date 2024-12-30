@@ -12,18 +12,19 @@ export default function App() {
   const [filter, setFilter] = useLocalStorage<SearchFilter>("searchFilter", {
     apiKey: import.meta.env.VITE_POLY_API_KEY ?? "",
     ticker: "NVDA",
-    alertPercentage: 5,
-    alertDirection: "up",
+    notify: {
+      percentage: 5,
+      type: "both",
+    },
     marketSpan: "yesterday",
     price: "close",
-    alertEnabled: true,
   });
 
   useEffect(() => {
-    if (filter.alertEnabled) {
+    if (filter.notify) {
       acquireNotificationPermissions();
     }
-  }, [filter.alertEnabled]);
+  }, [filter.notify]);
 
   return (
     <>

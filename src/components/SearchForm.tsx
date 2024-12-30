@@ -1,14 +1,17 @@
-import { AlertDirection, alertDirections } from "../fixtures/alertDirections";
-import { marketSpans, MarketSpanType } from "../fixtures/marketSpans";
-import { PriceType, priceTypes } from "../fixtures/priceTypes";
+import {
+  NotificationCriteriaType,
+  NotificationCriteria,
+  defaultNotificationCriteria,
+  notificationCriterias,
+} from "../fixtures/notificationCriteria";
+import { marketSpans, MarketSpanType } from "../fixtures/marketSpan";
+import { PriceType, priceTypes } from "../fixtures/priceType";
 import styles from "./SearchForm.module.css";
 
 export interface SearchFilter {
   apiKey: string;
   ticker: string;
-  alertPercentage: number;
-  alertDirection: "up" | "down" | "both";
-  alertEnabled: boolean;
+  notify?: NotificationCriteria;
   marketSpan: MarketSpanType;
   price: PriceType;
 }
@@ -79,38 +82,54 @@ export function SearchForm({
       </label>
 
       <label>
-        alert when
-        <select
-          value={filter.alertDirection}
-          onChange={(e) =>
-            setFilter("alertDirection", e.currentTarget.value as AlertDirection)
-          }
-        >
-          {Object.entries(alertDirections).map(([value, { label }]) => (
-            <option key={value} value={value}>
-              {label}
-            </option>
-          ))}
-        </select>
-        <input
-          type="number"
-          value={filter.alertPercentage}
-          min={0}
-          style={{ width: "4em" }}
-          onChange={(e) =>
-            setFilter("alertPercentage", e.currentTarget.valueAsNumber)
-          }
-        />
-        percent
-      </label>
-
-      <label>
-        alert enabled
         <input
           type="checkbox"
-          checked={filter.alertEnabled}
-          onChange={(e) => setFilter("alertEnabled", e.currentTarget.checked)}
+          checked={!!filter.notify}
+          onChange={(e) =>
+            setFilter(
+              "notify",
+              e.currentTarget.checked ? defaultNotificationCriteria : undefined,
+            )
+          }
         />
+        notify
+        {filter.notify && (
+          <>
+            <span> when</span>
+            <select
+              value={filter.notify.type}
+              onChange={(e) =>
+                setFilter("notify", {
+                  ...defaultNotificationCriteria,
+                  ...filter.notify,
+                  type: e.currentTarget.value as NotificationCriteriaType,
+                })
+              }
+            >
+              {Object.entries(notificationCriterias).map(
+                ([value, { label }]) => (
+                  <option key={value} value={value}>
+                    {label}
+                  </option>
+                ),
+              )}
+            </select>
+            <input
+              type="number"
+              value={filter.notify.percentage}
+              min={0}
+              style={{ width: "4em" }}
+              onChange={(e) =>
+                setFilter("notify", {
+                  ...defaultNotificationCriteria,
+                  ...filter.notify,
+                  percentage: e.currentTarget.valueAsNumber,
+                })
+              }
+            />
+            percent
+          </>
+        )}
       </label>
     </div>
   );
