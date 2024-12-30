@@ -17,10 +17,6 @@ jobs:
           registry-url: "https://registry.npmjs.org"
           cache: "pnpm"
 
-      - name: Install Dependencies
-        run: pnpm install
-
-      - name: Code quality checks
       - run: pnpm lint:check
       - run: pnpm format:check
 
