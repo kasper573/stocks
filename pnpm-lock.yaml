@@ -33,6 +33,9 @@ dependencies:
   react-error-boundary:
     specifier: ^5.0.0
     version: 5.0.0(react@18.3.1)
+  react-howler:
+    specifier: ^5.2.0
+    version: 5.2.0
   usehooks-ts:
     specifier: ^3.1.0
     version: 3.1.0(react@18.3.1)
@@ -50,6 +53,9 @@ devDependencies:
   '@types/react-dom':
     specifier: ^18.3.5
     version: 18.3.5(@types/react@18.3.18)
+  '@types/react-howler':
+    specifier: 5.2.3
+    version: 5.2.3
   '@vite-pwa/assets-generator':
     specifier: ^0.2.4
     version: 0.2.6
@@ -1964,6 +1970,10 @@ packages:
     resolution: {integrity: sha512-AYnb1nQyY49te+VRAVgmzfcgjYS91mY5P0TKUDCLEM+gNnA+3T6rWITXRLYCpahpqSQbN5cE+gHpnPyXjHWxcw==}
     dev: true
 
+  /@types/howler@2.2.12:
+    resolution: {integrity: sha512-hy769UICzOSdK0Kn1FBk4gN+lswcj1EKRkmiDtMkUGvFfYJzgaDXmVXkSShS2m89ERAatGIPnTUlp2HhfkVo5g==}
+    dev: true
+
   /@types/json-schema@7.0.15:
     resolution: {integrity: sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==}
     dev: true
@@ -1983,6 +1993,13 @@ packages:
     peerDependencies:
       '@types/react': ^18.0.0
     dependencies:
+      '@types/react': 18.3.18
+    dev: true
+
+  /@types/react-howler@5.2.3:
+    resolution: {integrity: sha512-0XJ+vHLgobVcc8G8f3jlnfIv3FVnUvEuxOyq3TwW9qNBeko7EhHDc9QYtY7mUTcrT86mPTAVCKWitY+TyzHWZw==}
+    dependencies:
+      '@types/howler': 2.2.12
       '@types/react': 18.3.18
     dev: true
 
@@ -3259,6 +3276,10 @@ packages:
       function-bind: 1.1.2
     dev: true
 
+  /howler@2.2.4:
+    resolution: {integrity: sha512-iARIBPgcQrwtEr+tALF+rapJ8qSc+Set2GJQl7xT1MQzWaVkFebdJhR3alVlSiUf5U7nAANKuj3aWpwerocD5w==}
+    dev: false
+
   /ico-endec@0.1.6:
     resolution: {integrity: sha512-ZdLU38ZoED3g1j3iEyzcQj+wAkY2xfWNkymszfJPoxucIUhK7NayQ+/C4Kv0nDFMIsbtbEHldv3V8PU494/ueQ==}
     dev: true
@@ -3765,6 +3786,11 @@ packages:
     resolution: {integrity: sha512-xxOWJsBKtzAq7DY0J+DTzuz58K8e7sJbdgwkbMWQe8UYB6ekmsQ45q0M/tJDsGaZmbC+l7n57UV8Hl5tHxO9uw==}
     dev: true
 
+  /object-assign@4.1.1:
+    resolution: {integrity: sha512-rJgTQnkUnH1sFw8yT6VSU3zD3sWmu6sZhIseY8VX+GRu3P6F7Fu+JNDoXfklElbLJSnc3FUQHVe4cU5hj+BcUg==}
+    engines: {node: '>=0.10.0'}
+    dev: false
+
   /object-inspect@1.13.3:
     resolution: {integrity: sha512-kDCGIbxkDSXE3euJZZXzc6to7fCrKHNI/hSRQnRuQ+BWjFNzZwiFF8fj/6o2t2G9/jTj8PSIYTfCLelLZEeRpA==}
     engines: {node: '>= 0.4'}
@@ -3922,6 +3948,14 @@ packages:
     engines: {node: ^14.13.1 || >=16.0.0}
     dev: true
 
+  /prop-types@15.8.1:
+    resolution: {integrity: sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==}
+    dependencies:
+      loose-envify: 1.4.0
+      object-assign: 4.1.1
+      react-is: 16.13.1
+    dev: false
+
   /pump@3.0.2:
     resolution: {integrity: sha512-tUPXtzlGM8FE3P0ZL6DVs/3P58k9nk8/jZeQCurTJylQA8qFYzHFfhBJkuqyE0FifOsQ0uKWekiZ5g8wtr28cw==}
     dependencies:
@@ -3985,6 +4019,17 @@ packages:
     dependencies:
       '@babel/runtime': 7.26.0
       react: 18.3.1
+    dev: false
+
+  /react-howler@5.2.0:
+    resolution: {integrity: sha512-oDK+zML0MHf3nVNM4lMxh+re87NDa7fHowea2WK8197yqnMiZfPVHoMXtfb/PtuoOsWLO06vmEAtovwTRWpTFg==}
+    dependencies:
+      howler: 2.2.4
+      prop-types: 15.8.1
+    dev: false
+
+  /react-is@16.13.1:
+    resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
     dev: false
 
   /react@18.3.1:
