@@ -37,3 +37,7 @@ async function swReg() {
   logger.log("acquired service worker");
   return reg;
 }
+
+export function isAppInBackground() {
+  return document.visibilityState === "hidden";
+}

@@ -8,9 +8,9 @@ export interface SearchFilter {
   ticker: string;
   alertPercentage: number;
   alertDirection: "up" | "down" | "both";
+  alertEnabled: boolean;
   marketSpan: MarketSpanType;
   price: PriceType;
-  enabled: boolean;
 }
 
 export function SearchForm({
@@ -108,8 +108,8 @@ export function SearchForm({
         alert enabled
         <input
           type="checkbox"
-          checked={filter.enabled}
-          onChange={(e) => setFilter("enabled", e.currentTarget.checked)}
+          checked={filter.alertEnabled}
+          onChange={(e) => setFilter("alertEnabled", e.currentTarget.checked)}
         />
       </label>
     </div>

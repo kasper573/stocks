@@ -8,7 +8,10 @@ import { SearchFilter } from "./SearchForm";
 import { marketSpans } from "../fixtures/marketSpans";
 import { useDebounceValue, useInterval } from "usehooks-ts";
 import { alertDirections } from "../fixtures/alertDirections";
-import { sendNotification } from "../functions/sendNotification";
+import {
+  isAppInBackground,
+  sendNotification,
+} from "../functions/sendNotification";
 import { logger } from "../logger";
 
 export function SearchResult({
@@ -36,15 +39,15 @@ export function SearchResult({
   });
 
   const alertDir = alertDirections[filter.alertDirection];
-  const isAlertActive =
+  const isAlertPrice =
     price && alertDir.isMatch(priceChange(price), filter.alertPercentage);
 
   useEffect(() => {
-    if (filter.enabled && isAlertActive) {
+    if (filter.alertEnabled && isAlertPrice && isAppInBackground()) {
       sendNotification("Price alert", `Price alert for ${filter.ticker}`);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isAlertActive, filter.enabled]);
+  }, [isAlertPrice, filter.alertEnabled]);
 
   function tryAlert() {
     logger.log("testing background activity");
@@ -60,7 +63,7 @@ export function SearchResult({
       <div>To price: {price.to}</div>
       <div>Price change: {priceChange(price).toFixed(2)}%</div>
 
-      {isAlertActive && (
+      {isAlertPrice && (
         <h1 style={{ color: "red" }}>Alert! Price change matches target!</h1>
       )}
     </>

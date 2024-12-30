@@ -1,4 +1,4 @@
-import { Suspense } from "react";
+import { Suspense, useEffect } from "react";
 import { SearchFilter, SearchForm } from "./SearchForm";
 import { SearchResult } from "./SearchResult";
 import { SuspenseFallback } from "./SuspenseFallback";
@@ -7,6 +7,7 @@ import { ErrorFallback } from "./ErrorFallback";
 import { useLocalStorage } from "usehooks-ts";
 import { PWABadge } from "./PWABadge";
 import { LogViewer } from "./LogViewer";
+import { acquireNotificationPermissions } from "../functions/sendNotification";
 
 export default function App() {
   const [filter, setFilter] = useLocalStorage<SearchFilter>("searchFilter", {
@@ -16,8 +17,14 @@ export default function App() {
     alertDirection: "up",
     marketSpan: "yesterday",
     price: "close",
-    enabled: true,
+    alertEnabled: true,
   });
+
+  useEffect(() => {
+    if (filter.alertEnabled) {
+      acquireNotificationPermissions();
+    }
+  }, [filter.alertEnabled]);
 
   return (
     <>
