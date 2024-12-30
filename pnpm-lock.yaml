@@ -9,6 +9,9 @@ overrides:
   sharp-ico: 0.1.5
 
 dependencies:
+  '@fontsource/lato':
+    specifier: ^5.1.1
+    version: 5.1.1
   '@polygon.io/client-js':
     specifier: 7.3.2
     version: 7.3.2
@@ -1452,6 +1455,10 @@ packages:
     dependencies:
       levn: 0.4.1
     dev: true
+
+  /@fontsource/lato@5.1.1:
+    resolution: {integrity: sha512-sHnUKhfLcCxa2DTfXlpFntXJAFJ/s4kmmRFRf29Dp7dBcdFdlvWjCbXPZf1rhkzdE1vqTwBVlOGSX/kFgIOkhg==}
+    dev: false
 
   /@humanfs/core@0.19.1:
     resolution: {integrity: sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA==}

@@ -1,3 +1,5 @@
+import "@fontsource/lato";
+import "./main.css";
 import { lazy, StrictMode, Suspense } from "react";
 import { createRoot } from "react-dom/client";
 import { QueryClient } from "@tanstack/react-query";
