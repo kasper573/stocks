@@ -9,6 +9,7 @@ import { marketSpans } from "../fixtures/marketSpans";
 import { useDebounceValue } from "usehooks-ts";
 import { alertDirections } from "../fixtures/alertDirections";
 import { Alert } from "./Alert";
+import { sendNotification } from "../functions/sendNotification";
 
 export function SearchResult({
   filter: inputFilter,
@@ -39,6 +40,7 @@ export function SearchResult({
   useEffect(() => {
     const alertDir = alertDirections[filter.alertDirection];
     if (price && alertDir.isMatch(priceChange(price), filter.alertPercentage)) {
+      sendNotification("Price alert", `Price alert for ${filter.ticker}`);
       setIsAlertVisible(true);
     }
   }, [price, filter]);
