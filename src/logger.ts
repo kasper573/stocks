@@ -4,6 +4,7 @@ class Logger {
 
   log = (...entry: LogEntry) => {
     this.entries = [...this.entries, entry];
+    this.subscriptions.forEach((handler) => handler(entry));
   };
 
   getState = (): ReadonlyArray<LogEntry> => this.entries;
