@@ -52,15 +52,21 @@ export function SearchResult({
 
   return (
     <>
-      <div>From date: {dates.from}</div>
-      <div>To date: {dates.to}</div>
-      <div>From price: {price.from}</div>
-      <div>To price: {price.to}</div>
-      <div>Price change: {priceChange(price).toFixed(2)}%</div>
+      <div>
+        Dates: {dates.from} to {dates.to}
+      </div>
+      <div>
+        Price: {price.from} to {price.to} (
+        {formatPercentage(priceChange(price))})
+      </div>
 
       {shouldNotify && (
         <h1 style={{ color: "red" }}>Price change matches target!</h1>
       )}
     </>
   );
+}
+
+function formatPercentage(p: number) {
+  return `${Math.sign(p) ? "+" : "-"}${Math.abs(p).toFixed(2)}%`;
 }
