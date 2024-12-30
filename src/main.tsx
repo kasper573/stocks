@@ -6,6 +6,7 @@ import { ErrorFallback } from "./components/ErrorFallback.tsx";
 import { SuspenseFallback } from "./components/SuspenseFallback.tsx";
 import { createSyncStoragePersister } from "@tanstack/query-sync-storage-persister";
 import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client";
+import { acquireNotificationPermissions } from "./functions/sendNotification.ts";
 
 // eslint-disable-next-line react-refresh/only-export-components
 const App = lazy(() => import("./components/App.tsx"));
@@ -22,6 +23,8 @@ const queryClient = new QueryClient({
 });
 
 const persister = createSyncStoragePersister({ storage: localStorage });
+
+void acquireNotificationPermissions();
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
