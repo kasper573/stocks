@@ -20,7 +20,7 @@ export function SearchResult({
   filter: SearchFilter;
 }) {
   const now = useNow();
-  const [filter] = useDebounceValue(inputFilter, 500);
+  const [filter] = useDebounceValue(inputFilter, 333);
   const api = useMemo(() => restClient(filter.apiKey), [filter.apiKey]);
 
   const { data: holidays } = useSuspenseQuery({

@@ -13,13 +13,14 @@ import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client
 // eslint-disable-next-line react-refresh/only-export-components
 const App = lazy(() => import("./components/App.tsx"));
 
+const gcTime = 1000 * 60 * 60;
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       retry: false,
       throwOnError: true,
-      staleTime: Infinity,
-      gcTime: 1000 * 60 * 60 * 24,
+      staleTime: gcTime,
+      gcTime,
     },
   },
 });
